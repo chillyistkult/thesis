@@ -1,0 +1,514 @@
+\chapter{Thematische Grundlagen}
+\label{cha:Thematische Grundlagen}
+
+In diesem Kapitel werden thematische Grundlagen beleuchtet, die zum Verständnis dieser Arbeit beitragen. In Abschnitt \ref{sec:ROA} wird das Architekturmuster \ac{ROA} erläutert und anhand von ausgewählten Gesichtspunkten betrachtet. Dabei wird insbesondere Bezug auf die Einordnung von ROA im Kontext von \ac{REST} genommen. Abschließend wird in Abschnitt \ref{sec:software-ergonomie} Software-Ergonomie und deren Bedeutung für die Erstellung benutzerfreundlicher Oberflächen in der Softwareentwicklung behandelt. Es werden jeweils nur Grundlagen vermittelt und auf weiterführende Literatur verwiesen.
+
+\section{Resource-Oriented Architecture (ROA)}
+\label{sec:ROA}
+
+\subsection{Definition und Einordnung im Kontext von REST}
+\label{sec:ROA:Definition und Einordnung im Kontext von REST}
+
+\acf{ROA} ist ein Architekturmuster der Informationstechnik aus dem Bereich der verteilten Systeme, um Dienste von IT-Systemen zu strukturieren und zu nutzen. Der Begriff Ressource ist dabei bezeichnend für ein zentrales Element dieses Architekturmusters. Als Ressource im Kontext von \ac{ROA} wird im Allgemeinen jede Komponente einer Anwendung bezeichnet, die verwendet oder adressiert werden muss. Ressourcen können dabei sowohl physische Objekte\footnote{Zum Beispiel Sensoren oder Temperatursonden.}, als auch abstrakte Datenobjekte beschreiben. \parencite[vgl.][2]{REST2010} Das Ansprechen dieser Ressourcen über ein Netzwerk definierte Roy Fielding in seiner Dissertation aus dem Jahr 2000 erstmals als \acf{REST}. Fielding fasst REST dabei als eine Reihe von Grundsätzen für die Gestaltung von netzwerkbasierten Software-Architekturen zusammen. Ziel der Anwendung dieser Grundsätze ist es den Netzwerkdurchsatz und die dabei entstehenden Latenzzeiten in einem verteilten System zu minimieren und gleichzeitig die Unabhängigkeit und damit einhergehende bessere Skalierbarkeit der einzelnen Komponenten zu fördern. \parencite[vgl.][35,76]{Fielding2000} Werden diese Grundsätze bei der Implementierung eines Webservices berücksichtigt spricht man auch von REST-konformen bzw. RESTful Webservices.
+
+Es lässt sich erkennen, dass die Definition von \ac{REST} und \ac{ROA} aufgrund ihrer Ressourcenorientierung stark ineinandergreifen. Beide Begriffe werden deshalb oft auch synonym verwendet. Die synonyme Verwendung beider Begriffe ist aus akademischer Sicht aber nicht schlüssig. Denn während \ac{ROA} ein Architekturmuster beschreibt, definiert Fielding \ac{REST} als einen Architekturstil. Wo liegen also die Unterschiede zwischen einer Architektur und einem Architekturstil?
+
+Eine Software-Architektur ist die Struktur einer Anwendung oder Computersystems, bestehend aus Software-Komponenten und deren nach außen sichtbaren Schnittstellen, sowie die Beziehung, die zwischen diesen Komponenten beschrieben werden kann \parencite[vgl.][21]{Bass2003}. Ein Architekturstil umfasst hingegen eine Menge von Architekturen deren Eigenschaften sich hinsichtlich der typischen strukturellen Organisation ihrer Komponenten und deren Kommunikation untereinander gleichen \parencite[vgl.][20]{Shaw1996}.
+
+Anhand dieser Definitionen lassen sich \ac{ROA} und \ac{REST} nun klar voneinander abgrenzen. \ac{REST} beschreibt demnach nur eine Menge von Entwurfskriterien auf Grundlage derer Software-Architekturen realisiert werden können. Erfüllt eine Architektur alle diese Entwurfskriterien, spricht man von einer \ac{ROA}. Das bedeutet im Umkehrschluss aber auch, dass es andere Software-Architekturen geben kann, die das Konzept \ac{REST} ganz oder auch nur teilweise implementieren.
+
+\subsection{Grundsätze des REST-Architekturstils}
+\label{sec:ROA:Grundsätze des REST-Architekturstils}
+
+Die Grundsätze die Fielding für \ac{REST} in \citetitle[77\psqq]{Fielding2000} definiert, sind nicht das Ergebnis rein theoretischer Überlegungen, sondern das Ergebnis der Analyse der Funktionsweise des \ac{WWW}. Die Zusammenfassung dieser Ergebnisse als Grundsätze eines neuen Architekturstils sind seitdem Bestandteil verschiedener Architekturmuster in der Software-Entwicklung und Gegenstand dieses Abschnitts.
+
+\subsubsection{Client-Server}
+
+Der erste Grundsatz beschreibt die Trennung zwischen Server und Client. In diesem Grundsatz findet sich das Prinzip \emph{Separation of Concerns}\footnote{Siehe \hyperlink{https://effectivesoftwaredesign.com/2012/02/05/separation-of-concerns/}{https://effectivesoftwaredesign.com/2012/02/05/separation-of-concerns/}.} wieder, welches die Trennung von Zuständigkeitsbereichen propagiert. Dieser Ansatz verbessert die Skalierbarkeit und Portabilität, da die einzelnen Komponenten auf Server- und Clientseite einfach gehalten und getrennt voneinander entwickelt werden können.
+
+\subsubsection{Zustandslosigkeit}
+\label{sec:ROA:Zustandslosigkeit}
+
+Dieser Grundsatz bezieht sich auf die zustandslose Kommunikation in einer Client-Server-Interaktion. Das bedeutet, dass in einer Anfrage an den Server alle benötigten Informationen zur Bearbeitung der Anfrage enthalten sein müssen. Die Verwaltung von Sitzungen liegt nach Fielding ausschließlich beim Client. Da keine Daten zwischen verschiedenen Anfragen gespeichert werden müssen, wird dadurch die Zuverlässigkeit der Komponenten erhöht. Außerdem ist es einfacher, den Status des Systems nach einem Auftritt von Fehlern wiederherzustellen. Ein Nachteil ist jedoch die erhöhte Netzwerklast aufgrund des Sendens von wiederkehrenden Informationen in aufeinanderfolgenden Anfragen gleichen Typs.
+
+\subsubsection{Caching}
+
+Um die Netzwerklast zu verringern, beschreibt Fielding ein Verfahren zum clientseitigen Zwischenspeichern von Daten. Jede Kommunikation zwischen Client und Server soll dabei auf ihre Cachefähigkeit gekennzeichnet werden. Ist eine Anfrage cachefähig, wird bei wiederholtem Aufruf die Antwort des Servers im Client aus einem Zwischenspeicher geladen. \parencite[vgl.][79\psqq]{Fielding2000} Dieses Konzept kann, wenn davon auszugehen ist das sich Daten zwischen verschiedenen Anfragen über einen längeren Zeitraum hinweg nicht ändern, die Performance verbessern und die Netzwerklast damit senken. Ist allerdings davon auszugehen, dass sich die Daten häufig ändern, kann die Implementierung eines Cache dazu führen, dass der Client veraltete Daten aus dem Zwischenspeicher bereitstellt.
+
+\subsubsection{Einheitliche Schnittstelle}
+\label{sec:ROA:Einheitliche Schnittstelle}
+
+Ein Kernkonzept des REST-Architekturstils ist die Etablierung einer einheitlichen und allgemeinen Schnittstelle, über die Komponenten kommunizieren. Dadurch werden Implementierungen von den bereitgestellten Services entkoppelt. Dies vereinfacht die Gesamtarchitektur und fördert zusätzlich die Skalierbarkeit. \parencite[vgl.][81\psq]{Fielding2000} Allerdings muss eine einheitliche Schnittstelle nicht in jedem Fall den spezifischen Anforderungen einer Applikation genügen, was negativen Einfluss auf die Effektivität der Implementierung haben kann. Da \ac{REST} von den Bedürfnissen des \ac{WWW} abgeleitet wurde, eignet sich die REST-Schnittstelle besonders für groß angelegte Applikationen, in denen Effektivität zugunsten der Einfachheit der Schnittstellenimplementierung niedriger priorisiert werden kann. Für die Implementierung einer einheitlichen Schnittstelle definierte Fielding \parencite[82]{Fielding2000} weiterhin vier Grundsätze:
+\newpage
+\begin{itemize}
+\item Bestimmung von Ressourcen
+\item Manipulation von Ressourcen über Repräsentationen
+\item Selbstbeschreibende Nachrichten
+\item Hypermedia als Engine des Application State
+\end{itemize}
+Diese Grundsätze werden in Abschnitt \ref{sec:ROA:Bestandteile des REST-Architekturstils} näher betrachtet.
+
+\subsubsection{Geschichtetes System}
+
+Ein aus verschiedenen Schichten bestehendes System erlaubt eine klare Trennung von Zuständigkeiten. Jede Schicht hat nur Kenntnis über die jeweiligen Schichten, mit denen sie kommunizieren muss. Damit wird die Gesamtkomplexität des Systems durch natürliche Schranken in der Architektur verringert. \parencite[vgl.][82\psqq]{Fielding2000} Zum Beispiel können damit Proxies oder Gateways als Mittel zur Lastenverteilung als Kommunikationsschicht zwischen Server und Client etabliert werden. Auch eine Auslagerung von bestehenden Codestrukturen in eigene Schichten kann sinnvoll sein, wenn es zum Beispiel notwendig wird, die Funktionalität von Legacy-Code zu erhalten, währenddessen der Service in einer anderen Schicht weiterentwickelt wird. Je mehr Schichten in das System eingeführt werden, desto höher ist allerdings auch die Verzögerung in der Verarbeitung der Daten.
+
+\subsubsection{Code-On-Demand}
+
+Der letzte Grundsatz des REST-Architekturstils ist Code-On-Demand. Damit beschreibt Fielding die Möglichkeit des Clients Programmcode herunterzuladen und auszuführen, welcher in Applets oder Skripten zur Verfügung gestellt wird. Der Client kann dadurch zur Laufzeit dynamisch erweitert werden, was die Komplexität und den Umfang verringern kann. \parencite[vgl.][84\psq]{Fielding2000}
+
+\subsection{Bestandteile des REST-Architekturstils
+}
+\label{sec:ROA:Bestandteile des REST-Architekturstils}
+
+\subsubsection{Datenelement}
+\label{sec:ROA:Datenelement}
+
+Datenelemente im Sinne von \ac{REST} sind Repräsentationen von Informationen, die zwischen Komponenten (über ein Netzwerk) transportiert werden. Das Format der Informationen wird dabei dynamisch durch die Art der Ressource und den Anforderungen des Clients aus einer Menge von Standartdatentypen bestimmt. In Tabelle \ref{tab:dataelements} sind die Datenelemente des REST-Architekturstils dargestellt, die nachfolgend erläutert werden. 
+
+\begin{table}[H]
+\centering
+\def\rr{\rightskip=0pt plus1em \spaceskip=.3333em \xspaceskip=.5em\relax}
+\setlength{\tabcolsep}{1ex}
+\def\arraystretch{1.20}
+\setlength{\tabcolsep}{1ex}
+\small
+\begin{tabular}{|p{0.4\textwidth}|p{0.4\textwidth}|}
+\hline
+   \multicolumn{1}{|c}{\emph{Datenelement}} &
+   \multicolumn{1}{|c|}{\emph{Beispiele}} \\
+\hline\hline
+   {\rr Resource} &
+   Ziel einer Hypertext Referenz
+   \\
+\hline
+  {\rr Resource Identifier} &
+  URL, URN
+  \\
+\hline
+  {\rr Representation} &
+  HTML-Dokument, JPG-Datei
+  \\
+\hline
+  {\rr Representation Metadata} &
+  Medientyp, Änderungsdatum
+  \\
+\hline
+  {\rr Resource Metadata} &
+  source link, alternates, vary
+  \\
+\hline
+  {\rr Control Data} &
+  if-modified-since, cache-control
+  \\
+\hline
+\end{tabular}
+\caption{REST Datenelemente}
+\label{tab:dataelements}
+\end{table}
+
+Eine \emph{Ressource} ist die Kernabstraktion einer Information des REST-Architekturstils. Eine Ressource wird nach Fielding als eine Abbildungsfunktion beschrieben, die zu einer bestimmten Zeit eine Menge von Werten abbildet. Diese Werte können \emph{Repräsentationen} von Ressourcen sowie Ressourcenbezeichner sein. \emph{Ressourcenbezeichner} werden verwendet, um Ressourcen eindeutig zu identifizieren bzw. zu adressieren. Auf einer Ressource werden von Komponenten Aktionen ausgeführt, die als Ergebnis Repräsentationen von Ressourcen erzeugen. Diese Repräsentationen werden an andere Komponenten übertragen und bestehen dabei aus Informationen aus der Ressource selbst, sowie \emph{Metadaten}, die diese Informationen beschreiben. \emph{Kontrolldaten} werden zusätzlich übertragen, um zum einen den Zweck der Nachricht zu beschreiben, als auch Zusatzfunktionen, wie zum Beispiel Caching-Verhalten, zu steuern. \parencite[vgl.][88\psqq]{Fielding2000}
+
+\subsubsection{Konnektoren}
+
+Verschiedene Typen von Konnektoren werden verwendet, um den Zugriff auf Ressourcen und die Übertragung ihrer Repräsentationen zu kapseln. Die Implementierung einer Komponente wird durch die Einführung von Konnektoren, die man auch als abstrakte Schnittstellen verstehen kann, von der Kommunikationslogik getrennt. In Abschnitt \ref{sec:ROA:Einheitliche Schnittstelle} wurde die zustandslose Kommunikation als ein Grundsatz des REST-Architekturstils beschrieben. Aufgrund dieser Zustandslosigkeit können Konnektoren Anfragen parallel abarbeiten, da kein Zusammenhang zwischen einzelnen Anfragen besteht. \parencite[vgl.][93]{Fielding2000} Die in diesem Abschnitt eingangs erwähnten verschiedenen Konnektortypen werden in Tabelle \ref{tab:connectors} dargestellt und nachfolgend erläutert.
+
+\begin{table}[H]
+\centering
+\def\rr{\rightskip=0pt plus1em \spaceskip=.3333em \xspaceskip=.5em\relax}
+\setlength{\tabcolsep}{1ex}
+\def\arraystretch{1.20}
+\setlength{\tabcolsep}{1ex}
+\small
+\begin{tabular}{|p{0.4\textwidth}|p{0.4\textwidth}|}
+\hline
+   \multicolumn{1}{|c}{\emph{Konnektor}} &
+   \multicolumn{1}{|c|}{\emph{Beispiele}} \\
+\hline\hline
+   {\rr Client} &
+   libwww, libwww-perl
+   \\
+\hline
+  {\rr Server} &
+  libwww, Apache API, NSAPI
+  \\
+\hline
+  {\rr Cache} &
+  browser cache
+  \\
+\hline
+  {\rr Resolver} &
+  adns (DNS-Lookup Bibliothek)
+  \\
+\hline
+  {\rr Tunnel} &
+  SOCKS, SSL
+  \\
+\hline
+\end{tabular}
+\caption{REST Konnektoren}
+\label{tab:connectors}
+\end{table} 
+
+Client- und Serverkonnektor sind die beiden wichtigsten Konnektortypen. Während der \emph{Clientkonnektor} stets eine Kommunikation mit dem Senden einer Anfrage einleitet, reagiert der \emph{Serverkonnektor} nur auf diese Anfragen und verschickt nach der Bearbeitung eine Antwort. 
+Auf den Schnittstellen von Client- und Serverkonnektor befinden sich \emph{Cachekonnektoren}. Diese haben die Aufgabe über die Cachefähigkeit einer Nachricht zu entscheiden und bei Bedarf ein Abbild einer Nachricht zu speichern. Dies kann auf Client- und auf Serverseite geschehen, um die Netzwerklast zu verringern bzw. um den Prozess der Erstellung der Antwortnachricht nicht mehrfach ausführen zu müssen. 
+Der \emph{Resolvekonnektor} übersetzt den Ressourcenbezeichner in eine Netzwerkadresse, um die für den physikalischen Netzwerkzugriff benötigten Daten zu erhalten.
+Schließlich übernimmt der \emph{Tunnelkonnektor} die Aufgabe Informationen über Systemgrenzen (z.B. Firewalls) hinweg zu transportieren. \parencite[vgl.][93\psq]{Fielding2000}
+
+\subsubsection{Komponenten}
+
+Komponenten werden nach Fielding anhand ihrer Rolle im Kontext der Gesamtanwendung zusammengefasst. Nachfolgend werden die in Tabelle dargestellten Komponenten betrachtet.
+
+\begin{table}[H]
+\centering
+\def\rr{\rightskip=0pt plus1em \spaceskip=.3333em \xspaceskip=.5em\relax}
+\setlength{\tabcolsep}{1ex}
+\def\arraystretch{1.20}
+\setlength{\tabcolsep}{1ex}
+\small
+\begin{tabular}{|p{0.4\textwidth}|p{0.4\textwidth}|}
+\hline
+   \multicolumn{1}{|c}{\emph{Komponente}} &
+   \multicolumn{1}{|c|}{\emph{Beispiele}} \\
+\hline\hline
+   {\rr Origin Server} &
+   Apache httpd, NGINX, Microsoft IIS
+   \\
+\hline
+  {\rr Gateway} &
+  Squid, CGI
+  \\
+\hline
+  {\rr Proxy} &
+  Netscape Proxy, CERN Proxy
+  \\
+\hline
+  {\rr User Agent} &
+  Mozilla, Chrome, Lynx
+  \\
+\hline
+\end{tabular}
+\caption{REST Komponenten}
+\label{tab:components}
+\end{table}
+
+Ein \emph{User Agent} verwendet einen Clientkonnektor, um eine Anfrage zu initiieren und ist gleichzeitig der Empfänger der Antworten dieser Anfrage. User Agents können zum Beispiel Webbrowser sein, die nach dem Aufruf einer Ressource ein Dokument anzeigen. Der \emph{Origin Server} nutzt einen Serverkonnektor, um den Namespace für eine angefragte Ressource zu verwalten. Dabei stellt er eine in Abschnitt \ref{sec:ROA:Einheitliche Schnittstelle} beschriebene generische Schnittstelle zum Zugriff auf Ressourcen bereit. Die Details der Implementierung eines Servers und seiner Komponenten sind dabei hinter der Schnittstelle versteckt und für andere Komponenten des Systems nicht sichtbar. Gateway- und Proxy-Komponenten agieren als Zwischenstellen im Kontext des Nachrichtenverlaufs zwischen Client und Server. Dabei wird ein \emph{Proxy} in der Regel von einem Client angefragt, wenn es zum Beispiel notwendig wird, Schnittstellen anderer Services zu kapseln oder den Service abzusichern. Ein \emph{Gateway} wird auch als Reverse Proxy bezeichnet und erfüllt dieselbe Funktion wie ein Proxy, wird aber durch das Netzwerk oder den Server gesteuert. \parencite[vgl.][97]{Fielding2000}
+
+\subsection{Prinzipien einer Ressource-Oriented Architecture
+}
+\label{sec:ROA:Prinzipien einer Ressource-Oriented Architecture}
+
+In Abschnitt \ref{sec:ROA:Definition und Einordnung im Kontext von REST} wird \ac{REST} als eine Sammlung von Prinzipien definiert, die zusammengefasst als Architekturstil, ein wesentliches Mittel zum Entwurf und zur Implementierung einer \ac{ROA} darstellen. \ac{REST} setzt dabei auf die Nutzung des \ac{HTTP} und seiner Möglichkeiten. REST-konforme Webservices müssen dabei aber nicht zwingend auf \ac{HTTP} basieren; derzeit ist es aber das einzige existierende und praktisch angewandte Protokoll. Maßgeblich beeinflusst wurde diese Technologieempfehlung durch Fielding, der gleichzeitig auch einer der Hauptautoren der HTTP-Spezifikation ist. Für eine \acl{ROA} wird deshalb als Technologiebasis \acs{URI}, \acs{HTTP} und \acs{XML} empfohlen. \parencite[vgl.][80]{Ruby2007} Nachfolgend werden anhand der in Abschnitt \ref{sec:ROA:Grundsätze des REST-Architekturstils} beschriebenen REST-Grundsätze, die Prinzipien einer ROA auf Basis der eben genannten Technologien beispielhaft beschrieben und auf mögliche Probleme eingegangen.
+
+\subsubsection{Adressierbarkeit}
+
+In Abschnitt \ref{sec:ROA:Datenelement} wird eine Ressource als eine Abbildungsfunktion beschrieben. Im Kontext einer \ac{ROA} kann diese zum Beispiel ein Algorithmus, eine Datenbankoperation oder Ähnliches sein, die über ein Netzwerk zugänglich ist. Die Adresse und der Name einer Ressource kann durch einen \ac{URI} eindeutig global identifiziert werden. Nachfolgend wird der Aufbau einer \ac{URI} nach dem \ac{RFC} Standard 3986, verfasst von \citeauthor{BernersLee1998}, erläutert. 
+
+\begin{center}
+\setlength{\fboxrule}{0.2mm}
+\setlength{\fboxsep}{2mm}
+\fbox{
+\begin{minipage}{0.9\textwidth}
+Protokoll://Host:Port/Pfad?Querystring/\#fragment
+\end{minipage}}
+\end{center}
+
+Das \emph{Protokoll} gibt an, welches Kommunikationsprotokoll zur Übertragung von Nachrichten genutzt werden soll. In \ac{ROA} sind das meistens \ac{HTTP} oder \ac{HTTPS}.
+Der \emph{Host} ist der \ac{DNS} Name oder die \ac{IP} Adresse einer adressierten Ressource. Die Angabe des \emph{Ports} erlaubt die Ansteuerung eines optionalen \ac{TCP} Ports. Der \emph{Pfad} beschreibt eine konkrete Ressource auf dem Server. Zusätzlich können über einen \emph{Querystring} weitere Informationen als Wertepaare an den Server übertragen werden. Ein \emph{Fragment} wird schließlich dazu verwendet eine bestimmte Stelle in einem Dokument anzuzeigen.
+Eine \ac{URI} sollte nach \citeauthor[83]{Ruby2007} so aufgebaut sein, dass die Bedeutung der referenzierten Ressource daraus hervorgeht. Eine Ressource kann dabei auch von mehreren \ac{URI} adressiert werden.
+
+\subsubsection{Einheitliche Schnittstelle}
+\label{sec:ROA:Einheitliche Schnittstelle}
+
+die HTTP-Spezifikation umfasst bereits eine Menge von Methoden, mit denen sich Ressourcen manipulieren lassen. In Tabelle \ref{tab:httpmethods} sind diese Methoden aufgelistet und beschrieben. Es gibt noch weitere HTTP-Methoden, wie TRACE oder CONNECT, diese spielen aber im Kontext eines RESTful-Webservice meist keine Rolle und werden deswegen nicht näher erläutert.
+
+\begin{table}[H]
+\centering
+\def\rr{\rightskip=0pt plus1em \spaceskip=.3333em \xspaceskip=.5em\relax}
+\setlength{\tabcolsep}{1ex}
+\def\arraystretch{1.20}
+\setlength{\tabcolsep}{1ex}
+\small
+\begin{tabular}{|p{0.2\textwidth}|p{0.6\textwidth}|}
+\hline
+   \multicolumn{1}{|c}{\emph{Methode}} &
+   \multicolumn{1}{|c|}{\emph{Beschreibung}} \\
+\hline\hline
+   {\rr GET} &
+Wird verwendet um die Information einer Ressource abzufragen (read-only).
+   \\
+\hline
+  {\rr PUT} &
+Fügt eine Repräsentation einer Ressource hinzu oder aktualisiert sie.
+  \\
+\hline
+  {\rr DELETE} &
+Löscht eine Repräsentation einer Ressource
+  \\
+\hline
+  {\rr POST} &
+Hinzufügen von Repräsentationen einer 	Ressource.
+  \\
+\hline
+  {\rr HEAD} &
+Wird verwendet um Metadaten einer Ressource 	abzufragen
+  \\
+\hline
+  {\rr OPTIONS} &
+Wird verwendet um Informationen über die Kommunikationsoptionen einer Ressource abzufragen.
+  \\
+\hline
+\end{tabular}
+\caption{HTTP-Methoden und ihre Bedeutung im Kontext eines RESTful-Webservice}
+\label{tab:httpmethods}
+\end{table}
+
+Um eine Repräsentation einer Ressource abzufragen oder zu löschen, sendet der Client nur eine GET- oder DELETE-Anforderung an die \ac{URI} der Ressource. Im Falle einer GET-Anforderung, antwortet der Server mit einer Repräsentation der Ressource im HTTP-Body. Für eine DELETE-Anforderung kann der Inhalt des HTTP-Body eine Statusmeldung enthalten oder auch leer bleiben. Um eine Ressource zu erstellen oder zu aktualisieren, wird in der Regel eine PUT-Anforderung gesendet. Der HTTP-Body enthält dabei die neue oder aktualisierte Repräsentation einer Ressource. POST wird verwendet, wenn eine Ressource erstellt werden soll, deren \ac{URI} vorher nicht bekannt ist. Dabei wird ebenfalls die zu erstellende Repräsentation der Ressource im HTTP-Body verschickt. Anzumerken ist, dass in der Fachwelt immer wieder unterschiedlich über die Funktionsweise von POST und PUT diskutiert wird. In diesem Abschnitt bezieht sich der Autor dieser Arbeit auf \cite[97\psq]{Ruby2007}.
+
+Das Datenformat für die Übertragung der Daten im HTTP-Body hängt in der Regel vom Service ab. Weit verbreitet ist \ac{XML}, dass aber zunehmend durch \ac{JSON} verdrängt wird. \ac{JSON} als Datenformat eignet sich besonders gut, wenn die Client-Komponenten einer \ac{ROA} mit Javascript realisiert werden, da sich JSON Nachrichten direkt in Javascript-Objekte übertragen lassen.
+
+\subsubsection{Zustandslosigkeit}
+
+In Abschnitt \ref{sec:ROA:Zustandslosigkeit} wurde Zustandslosigkeit bereits als ein Grundsatz des REST-Architekturstils dargestellt. Übertragen auf eine \ac{ROA} bedeutet Zustandslosigkeit, dass jede HTTP-Anfrage unabhängig und getrennt von allen vorherigen und nachfolgenden Anfragen erfolgt. Das bedeutet, dass immer alle Informationen die notwendig sind, um die Anfrage zu bearbeiten mitgeschickt werden müssen.
+
+Bei einer \ac{ROA} wird zwischen zwei Zuständen unterschieden: Dem \emph{Application State}, der den Zustand des Clients bezeichnet, und dem \emph{Resource State}, den Zustand des Servers. Dabei ist der Application State für jeden Client unterschiedlich, wohingegen der Resource State für alle Clients gleich ist. Dieser Sachverhalt liegt darin begründet, dass ein Client in der Regel von mehreren Benutzern aufgerufen werden kann. Jeder Benutzer hat dabei seine ganz eigene Umgebung, in der er den Client nutzt, und definiert damit auch seinen eigenen Application State. Jeder Benutzer greift über den Client aber auf denselben Server zu. Der Resource State ist deshalb für alle Clients gleich. \parencite[vgl.][90\psq]{Ruby2007} 
+
+Um echte Zustandslosigkeit zu erreichen, darf der Server nie Teile des Application States speichern und umgekehrt darf ein Application State nie Annahmen über den Resource State machen. Dieser Ansatz führt vor allem zu Problemen, wenn man den Zugriff auf eine Ressource auf einen bestimmten Nutzerkreis einschränken möchte (siehe Abschnitt \ref{sec:ROA:Sicherheit}).
+
+\subsubsection{Repräsentationen}
+
+In Abschnitt \ref{sec:ROA:Datenelement} wurden Repräsentationen als Datenelemente des REST-Architekturstils eingeführt. Eine Ressource erzeugt bei ihrem Aufruf über eine \ac{URI}, jeweils Repräsentationen ihres derzeitigen Zustands. Typischerweise sind in einer \ac{ROA} Ressourcen selbst Implementierungen, die auf Datenquellen zugreifen. Das ist zum Beispiel der Fall, wenn eine Ressource mit einer Datenbank verknüpft ist. Ressourcen müssen aber nicht zwangsweise abstrakte Datenobjekte beschreiben, sondern können, wie in Abschnitt \ref{sec:ROA:Definition und Einordnung im Kontext von REST} angedeutet, auch physische Objekte sein. Das können zum Beispiel Temperatursonden sein, die nicht einfach als abstraktes Datenobjekt beschrieben werden können. Die Repräsentation von physischen Ressourcen sind deshalb Metadaten, die Zustände oder Eigenschaften des physischen Objekts beschreiben. \parencite[vgl.][91]{Ruby2007}.
+
+Zusätzlich ist es in einer \ac{ROA} oft notwendig, dass abhängig von der Anfrage des Clients, verschiedene Arten von Repräsentationen erzeugt werden müssen. Als Beispiel sind hier Ressourcen zu nennen, deren Daten in verschiedenen Sprachen vorliegen. Eine Ressource entscheidet in diesem Anwendungsfall anhand von Metadaten, die der Client zum Beispiel im HTTP-Header mitsendet, welche Repräsentation der sprachsensitiven Inhalte erstellt werden müssen. Dieses Verhalten kann insbesondere zu Problemen führen, wenn der Client nicht weiß, welche Sprachen zur Verfügung stehen (da dies über die \ac{URI} erst einmal nicht ersichtlich ist) oder keine Angaben darüber macht, welche Sprache ausgeliefert werden soll. Die Ressource kann in diesem Fall nur Standardannahmen über die gewünschte Repräsentation machen. \citeauthor{Ruby2007} empfehlen daher, dass ein Client seine Anfragen immer so präzise wie möglich formulieren und nie auf Standardverhalten der Ressourcen vertrauen sollte. Das kann in einer komplexen \ac{ROA} Umgebung aber zu einer erhöhten Netzwerklast führen, da zusätzlich zum einfachen Aufruf einer \ac{URI} auch immer entsprechende Metadaten zur Steuerung der Ressourcen mitgeschickt werden müssen. \parencite[vgl.][94]{Ruby2007}
+
+\subsection{Sicherheit}
+\label{sec:ROA:Sicherheit}
+
+Zur Absicherung von Ressourcen vor unautorisierten Zugriff stellt die HTTP-Spezifikation bereits eigene Mechanismen zur Verfügung. Bei HTTP und damit im Kontext dieses Abschnitts auch bei RESTful Webservices, findet die Verschlüsselung von Nachrichten typischerweise auf Transportebene auf Basis des \ac{SSL} statt. Authentifizierung und Autorisierung kann entweder durch Basic-Authentication, Digest-Authentication oder Token-Authentication erfolgen. Außerdem ist es zusätzlich möglich, Ressourcen per Rechtevergabe (ähnlich wie bei einem Dateisystem) abzusichern. So kann eine Ressource beispielsweise read-only gestaltet werden, indem sie nur für GET und HEAD implementiert wird. \parencite[vgl.][311\psq]{Ruby2007}
+
+Auf Basis des \ac{RFC} 7519 Standards wird in diesem Abschnitt eine Möglichkeit der Token-basierten Authentifizierung näher beleuchtet.
+
+\subsubsection{Authentifizierung nach \ac{RFC} 7519}
+
+\ac{RFC} 7519 ist ein offener Standard, der eine Token-basierte Authentifizierung mithilfe eines \ac{JWT} beschreibt. Bei einer auf Tokens basierten Authentifizierung sendet der Client eine Anfrage an den Server mit den Benutzerdaten als Teile des HTTP-Body. Als Antwort bekommt der Client einen als \mbox{Base64} kodierten Token, der mit einem privaten Schlüssel erstellt und signiert wird. Die eindeutige Signatur stellt sicher, dass der Token im Nachhinein nicht manipuliert werden kann. Bei jeder weiteren Anfrage muss der Client nun diesen Token als Query-String oder im \ac{HTTP} Authorization-Header mitschicken. Der Token wird immer bei jeder Anfrage mit Hilfe des privaten Schlüssels validiert und gewährt entsprechend Zugriff auf die angefragte Ressource. In Bezug auf \ac{REST} ergibt sich damit ein wesentlicher Vorteil: Alle Informationen, die für die Validierung notwendig sind, sind in einem \ac{JWT}-Token enthalten, was die Zustandslosigkeit einer REST konformen Architektur fördert. \parencite[vgl.][13]{RFC7519} Ein \ac{JWT}-Token besteht aus drei Teilen: Dem Header, dem Payload und der Signatur. In Abbildung \ref{prog:jwtstructure} wird dieser Aufbau beispielhaft dargestellt und nachfolgend beschrieben.
+
+\begin{figure}[H]
+\begin{GenericCode}[numbers=none]
+Header
+{
+    "alg": "HS256",
+    "typ": "JWT"
+},
+Payload
+{
+    "iss": "authservice",
+    "sub": "92d0312b-26b9-4887-a338-7b00fb3c5eab",
+    "exp": 1431061608,
+    "iat": 1390234181,
+    "aud": ["http://example.de],
+    "name": "John Doe",
+    "role":	"Admin"
+}
+Signature 
+{
+	HS256
+    (
+      base64UrlEncode(header) + "." + 
+      base64UrlEncode(payload), 
+      secret
+    )
+}
+\end{GenericCode}
+\caption{Beispielhafter Aufbau eines \acf{JWT}}
+\label{prog:jwtstructure}
+\end{figure}
+
+\paragraph{Header} Im Header befinden sich eine Reihe von Metadaten, die das Token selbst und dessen Funktionsweise beschreiben. Im Header muss mindestens das genutzte Hashverfahren und der Typ des Tokens angegeben werden. Das Hashverfahren wird für die Erstellung der Signatur genutzt und muss vom Server unterstützt werden.
+
+\paragraph{Payload} Der Payload beinhaltet Informationen, die vom Server für die Authentifizierung des Benutzers benötigt werden. Claims werden als JSON-Objekt angegeben, wobei die Bezeichner der Wertepaare innerhalb eines Claims eindeutig sein müssen. Es wird zwischen drei verschiedenen Arten von Claims unterschieden.
+
+\paragraph{Registered Claims} Die registrierten Claims sind formal Teil jedes \ac{JWT}-Token und sind im \ac{IANA} Register für \ac{JWT}-Token eingetragen und definiert. In \citetitle[8]{RFC7519} wird lediglich eine Empfehlung gegeben, welche Claims mindestens angegeben werden sollten. Die Inhalte dieser Claims sind applikationsabhängig, werden aber in der Regel unbedingt benötigt um ein Token zu validieren. Nachfolgend werden in Tabelle \ref{tab:claims} diese Claims beschrieben.
+
+\begin{table}[H]
+\centering
+\def\rr{\rightskip=0pt plus1em \spaceskip=.3333em \xspaceskip=.5em\relax}
+\setlength{\tabcolsep}{1ex}
+\def\arraystretch{1.20}
+\setlength{\tabcolsep}{1ex}
+\small
+\begin{tabular}{|p{0.3\textwidth}|p{0.5\textwidth}|}
+\hline
+   \multicolumn{1}{|c}{\emph{Claim}} &
+   \multicolumn{1}{|c|}{\emph{Beschreibung}} \\
+\hline\hline
+   {\rr iss (Issuer)} &
+   Der Aussteller des Tokens.
+   \\
+\hline
+  {\rr sub (Subject)} &
+Das Subjekt welche durch das gesamte Claim-Set beschrieben wird. Dies kann zum Beispiel eine Benutzer-ID sein.
+  \\
+\hline
+  {\rr aud (Audience)} &
+Der vorgesehene Empfänger des Tokens. Es können mehrere Empfänger durch ein Array angegeben werden.
+  \\
+\hline
+  {\rr exp (Expiration Time)} &
+Das Zeitintervall, für das ein Token gültig ist.
+  \\
+\hline
+  {\rr iat (Issued At)} &
+Die genaue Zeit, zu der das Token ausgestellt wurde.
+  \\
+\hline
+  {\rr jti (JWT ID)} &
+Der eindeutiger Bezeichner eines Tokens.
+  \\
+\hline
+\end{tabular}
+\caption{Empfohlene Claims für ein \acf{JWT} nach \ac{RFC} 7519}
+\label{tab:claims}
+\end{table}
+
+
+\paragraph{Public Claims} Public Claims können selbst definiert werden. Es muss jedoch sichergestellt werden, das keine Namenskonflikte auftreten. Es wird daher empfohlen aus bereits im \ac{IANA} Register eingetragenen Claims zu wählen. Public Claims sind oft zusätzliche Angaben über den Benutzer, für den der Token ausgestellt wurde. Das können zum Beispiel Name, E-Mail-Adresse oder die Rolle des Benutzers innerhalb der Applikation sein. Alle Public Claims liegen, wie die Registered Claims, nicht kodiert vor und sind damit öffentlich. Sie dürfen deshalb keine sicherheitskritischen Informationen, wie etwa ein Passwort oder Ähnliches, enthalten.
+
+\paragraph{Private Claims} Private Claims sind in der Regel Claims, die nur innerhalb eines bestimmten Applikationskontext relevant sind und unterliegen keinerlei Namenseinschränkungen.
+
+\paragraph{Signature} Die Signatur des Tokens setzt sich aus den in Base64 konvertierten Header und Payloads eines \ac{JWT}-Tokens zusammen. Die entstehenden Zeichenketten werden durch einen Punkt getrennt und anschließend, wie in Abbildung \ref{prog:jwtstructure} aufgezeigt, mit einem privaten Schlüssel und dem angegeben Hashverfahren verschlüsselt.
+
+\subsection{Zusammenfassung}
+
+Die Prinzipien, die Fielding für \ac{REST} definierte, haben Einfluss auf viele Entwicklungen in der Software-Entwicklung genommen und sind heutzutage populärer denn je. Große Konzerne wie etwa Google und Amazon stellen ihre Webservices REST konform zur Verfügung und machen diese damit einfacher nutzbar. Die Beliebtheit lässt sich durch die verschiedenen Vorzüge erklären, die ein Ressourcen-orientierter Ansatz mit sich bringt:
+\begin{itemize} 
+\item Die einheitliche und generische Schnittstelle sichert ein erwartbares Verhalten beim Zugriff auf Ressourcen zu.
+\item Gute Skalierbarkeit durch die Möglichkeit des Cachings und der Verwendung von Proxys und Gateways.
+\item Die Möglichkeit der Absicherung durch eine Firewall schützt vor missbräuchlichen Zugriffen.
+\item Die lose, flexible Kopplung von Komponenten begünstigt die Skalierbarkeit und Effektivität in der Entwicklung zusätzlich.
+\item Die Unabhängigkeit von komplexen Protokollen erleichtert den Zugang und verringert die Komplexität der Anwendung.
+\end{itemize}
+Nicht zuletzt diese Vorteile machen \ac{ROA} als \glqq{}die REST-basierte Architektur\grqq{} populär. Vor allem im Bereich der Webentwicklung sind die Synergien offensichtlich und bekommen nicht zuletzt durch immer populärer werdende Javascript-Frameworks, wie zum Beispiel AngularJS oder EmberJS, zusätzlichen Aufwind. Die Tatsache das REST kein offizieller Standard ist, lässt bei der Anwendung seiner Prinzipien auf das Architekturmuster \ac{ROA} allerdings Interpretationsspielraum für einige der von Fielding beschriebene Grundsätze zu und kann dabei zu Verunsicherungen in der Frage führen \emph{\glqq{}Ist eine Architektur oder ein Webservice wirklich REST-konform?\grqq{}}. Die in den vorangegangenen Abschnitten erläuterten Vorgehensweisen zur Gestaltung einer \ac{ROA} können keine eindeutige Antwort auf diese Frage geben. Sie basieren auf Analysen und Interpretationen weniger Autoren - es gibt noch viele weitere Interpretationen, die in bestimmten Punkten abweichen können und in der Fachwelt diskutiert werden.
+
+% -----------------------------------------------------
+%\section{Scaffolding}
+%\label{sec:scaffolding}
+%
+%\subsection{Definition und Methoden}
+%
+%Scaffolding beschreibt im Kontext der Software-Entwicklung einen Ansatz Quellcode automatisch zu generieren, um wiederkehrende Programmieraufgaben effizienter zu gestalten. Um %Scaffolding als Prozess zu verstehen ist es notwendig den Begriff eines Codegenerators zu spezifizeren. 
+%Ein Programmgenerator ist ein Programm, das andere Programme erzeugt \parencite[vgl.][1]{Smaragdakis2004}. Diese Definition ist sehr unspezifisch und lässt noch keine Vorstellung über %den Zweck und Nutzen eines Codegenerators zu. Um diesen Sachverhalt besser zu verstehen hilft es typische Anwendungsgebiete von Codegeneratoren zu betrachten.
+%
+%
+%\subsection{Methoden}
+%
+%\subsection{Auswirkungen auf den Entwicklungsprozess}
+%
+%\subsection{Zusammenfassung}
+% -----------------------------------------------------
+
+\section{Software-Ergonomie}
+\label{sec:software-ergonomie}
+
+\subsection{Definition und Einordnung}
+\label{sec:software-ergonomie:Definition und Einordnung}
+
+Um Software-Ergonomie zu definieren und einzuordnen, ist es zu Beginn notwendig, Ergonomie allgemein als ein Teilgebiet zu betrachten. Das Wort Ergonomie setzt sich aus den griechischen Worten \emph{ergon} (Werk, Arbeit) und \emph{nomos} (Regel, Gesetz) zusammen. Ergonomie beschreibt die Wissenschaft über die Gesetzmäßigkeit der menschlichen Arbeit und beschäftigt sich vornehmlich mit der Untersuchung von Prozessabläufen beim Einsatz beliebiger Produkte. Als Ziel dieser Untersuchungen steht die Optimierung der Gebrauchstauglichkeit (Usability) einer Mensch-Maschinen-Schnittstelle. Die Anwendung ergonomischer Grundsätze haben dabei eine Anpassung der Arbeitsbedingungen an den Menschen zur Folge, indem sie intuitive Bedienung fördern. Sie erhöhen Rentabilität menschlicher Arbeit, begrenzen Gefährdungen und steigern die Zufriedenheit des Anwenders. \parencite[vgl.][1\psq]{Wandmacher1993} Denn während ein schickes Design beim Anwender meist nur für temporäre Begeisterung sorgt, soll eine ergonomische Gestaltung den Benutzer auch über einen längeren Zeitraum motivieren mit einem Produkt zu arbeiten. 
+
+Aufgrund des heutigen Stellenwertes in der Software-Entwicklung hat sich die Software-Ergonomie als ein eigenständiges Wissenschaftsgebiet entwickelt, welches sich insbesondere mit der Optimierung von Benutzerschnittstellen und Benutzeroberflächen beschäftigt. Eine Benutzerschnittstelle umfasst dabei diejenigen Komponenten und Aspekte eines Mensch-Computer-Systems, mit denen die Benutzer begrifflich oder über ihre Sinne und Motorik in Berührung kommen \parencite[vgl.][3\psqq]{Moran1981}. Das umfassende Themengebiet berührt dabei Aspekte der Beteiligung von Benutzern an der Software-Entwicklung, allgemeine Richtlinien und Normen, technische und organisatorische Rahmenbedingungen, Qualitätssicherung sowie den Einfluss der Software-Ergonomie auf wirtschaftliche Aspekte. Um diese Aspekte abzudecken, müssen viele verschiedene Disziplinen der Wissenschaft angewendet werden. Der umfangreiche internationale Standard EN ISO 9241 besteht aus insgesamt 17 Teilen, die alle Aspekte ergonomischer Softwaregestaltung beleuchten. Herauszuheben im Kontext dieser Arbeit ist die Norm EN ISO 9241-110 mit dem Titel \citetitle{ISO9241-110}, die in Abschnitt \ref{sec:ERG:Gestaltungsgrundsätze nach EN ISO 9241-110} beleuchtet wird.
+
+\subsection{Gestaltungsgrundsätze nach EN ISO 9241-110}
+\label{sec:ERG:Gestaltungsgrundsätze nach EN ISO 9241-110}
+
+Der Teil 110 der DIN EN ISO 9241 beschreibt eine Reihe von Grundsätzen für die Gestaltung und Bewertung einer Schnittstelle zwischen Benutzer und System (Dialoggestaltung). Die Norm ersetzt seit 2006 den früheren Teil 10. Gleichzeitig wurde der Anwendungsbereich erweitert, die Norm gilt nun nicht mehr nur für Software und Bildschirmarbeit, sondern allgemein für alle \glqq{}interaktiven Systeme\grqq{}. Gerade bei den oft recht komplexen Aufgaben einer modernen Webapplikation mit unterschiedlichen Bedien- und Eingabemöglichkeiten wird die Benutzbarkeit zu einem immer wichtigeren Erfolgsfaktor. Die Norm EN ISO 9241-110 beschreibt sieben zentrale Grundsätze der Dialoggestaltung, die nachfolgend erläutert werden.
+
+\subsubsection{Aufgabenangemessenheit}
+
+Dieser Grundsatz stützt sich auf die Merkmale Effektivität und Effizienz. Effektivität ist dabei die Genauigkeit und Vollständigkeit, mit der der Nutzer seine Aufgabe lösen kann. Effizienz hingegen ist der eingesetzte Aufwand im Verhältnis zur Genauigkeit und Vollständigkeit, mit der eine Aufgabe vom Benutzer erledigt wird. Ein interaktives System sollte den Benutzer unterstützen, seine Aufgabe zu erledigen. Dabei sollten alle Tätigkeiten, die nicht direkt mit dem Erreichen dieses Ziels zusammenhängen vom System erledigt werden. Der Nutzer sollte sich nur mit der Bearbeitung von sogenannten externen Aufgaben, die sich direkt aus der Arbeitsaufgabe ergeben, beschäftigen müssen. Die Erledigung seiner Aufgabe sollte mit so wenig Arbeitsschritten wie möglich realisierbar und die Oberfläche der Zielgruppe der Benutzer entsprechen. \parencite[vgl.][169\psqq]{Herczeg2009}
+
+\subsubsection{Steuerbarkeit}
+
+Steuerbarkeit sagt aus, dass der Benutzer das System kontrollieren können muss. Geschwindigkeit und Arbeitsreihenfolge muss nach den Bedürfnissen und Fertigkeiten des Benutzers anpassbar sein. Um verschiedenen Benutzergruppen gerecht zu werden, sollte es ebenfalls möglich sein, die Ein- und Ausgabe kontextabhängig anzupassen. Man unterscheidet zwischen system- und benutzergesteuerten Dialogen. Eine gesteuerte Nutzerführung ist dabei vor allem in komplexen Systemen häufig nicht zu vermeiden. Es wird jedoch wenn möglich eine Mischform empfohlen, bei der eine Sequenz vom Benutzer gestartet wird und diese dann in ihrer Geschwindigkeit regulierbar ist.\parencite[vgl.][179\psqq]{Herczeg2009} Bei sicherheitskritischen Systemen kann jedoch nicht immer auf eine rein systemgesteuerte Dialogkontrolle verzichtet werden.
+
+\subsubsection{Erwartungskonformität}
+
+Durch einen aus dem Alltag vieler nicht mehr wegzudenkenden Umgang mit Computersystemen entstehen Erfahrungen, aus denen sich Erwartungen bei der Benutzung ähnlicher Systeme ergeben. \citeauthor{Herczeg2009} definiert Erwartungskonformität als ein Maß dafür, wie gut ein System diese Erwartungen erfüllt. Systeme, die den Erwartungen ihrer Benutzer gerecht werden, erleichtern die Bildung eines geeigneten mentalen Modells des Systems. Grundsätzlich sollte ein System in sich konsistent sein und dabei vorhandenen Konventionen folgen. Neben der Gestaltung von Dialogen spielt aber auch die Performance eines Systems eine wesentliche Rolle. Wenn die Reaktionszeiten, aufgrund von schlecht optimierten Netzwerkoperationen oder Algorithmen, zu sehr vom gewohnten Verhalten abweicht, kann das beim Benutzer zu Verunsicherungen führen. Vorhersehbar unerwartetes Verhalten sollte deshalb mit Hilfe von Nachrichten, Fortschrittsanzeigen oder ähnlichem mit dem Benutzer kommuniziert werden. \parencite[vgl.][175\psqq]{Herczeg2009}
+
+\subsubsection{Selbstbeschreibungsfähigkeit}
+
+Es muss für einen Benutzer jederzeit ersichtlich sein, wo genau er sich gerade innerhalb einer Anwendung befindet. Dieses Systemverständnis sollte ohne besondere Hinweise oder Einführungen durch eine fundierte Oberflächengestaltung gewährleistet sein. Vor allem bei komplexen Anwendungen ist es aber zusätzlich notwendig verständliche und möglichst kontextabhängige Hilfen anzubieten, um den Benutzer zu ermöglichen den derzeitigen Status der Anwendung zu erkennen. \parencite[vgl.][172\psqq]{Herczeg2009}
+
+\subsubsection{Individualisierbarkeit}
+
+Die Gestaltung eines Systems kann nie den individuellen Vorstellungen jedes einzelnen Benutzers gerecht werden. Um diesen Makel zu kompensieren, sollten wichtige Teile des Layouts individualisierbar sein. Der Bedarf und die Möglichkeiten der Individualisierbarkeit hängen dabei von dem zu entwickelnden System ab. Um ein Beispiel zu nennen: Häufig wird der Benutzer nach dem Anmeldevorgang an einer Webapplikation auf ein Dashboard weitergeleitet. Solch ein Dashboard gibt meist einen Überblick über wichtige Informationen des Systems. Die Wichtigkeit solcher Informationen wird von jedem Benutzer unterschiedlich wahrgenommen und sollte deswegen hinsichtlich der Anordnung und dem Inhalt anpassbar sein. \parencite[vgl.][186\psqq]{Herczeg2009} 
+
+Das bedeutet jedoch keinesfalls, dass die Möglichkeit der Individualisierung gute Standardoberflächen ersetzt. Insbesondere ist zu vermeiden, dass Individualisierung zu Beeinträchtigungen in der Bedienung führen, etwa weil bestimmte Funktionen oder Inhalte durch Möglichkeiten der Individualisierung nicht mehr erreichbar oder versteckt sind. Ein weiterer Aspekt ist der erhöhte Pflegeaufwand und kompliziertere Support, den ein stark individualisierbares System nach sich zieht. Es sollte deshalb auch im Sinne der Aufgabenangemessenheit immer eine wohldurchdachte Abwägung zwischen individualisierbaren Oberflächen und Standardoberflächen erfolgen. \parencite[vgl.][189]{Herczeg2009}
+
+\subsubsection{Lernförderlichkeit}
+
+Eine Anwendung soll den Benutzer beim Einstieg und dem Erlernen der Bedienung eines Systems unterstützen und
+anleiten. Außerdem ist es notwendig, diese Lernmechanismen nicht nur unmittelbar nach dem Einstieg anzubieten, sondern ebenfalls die Möglichkeit zu schaffen erfahrenen Benutzern eine Wiederauffrischung des Gelernten anzubieten. Lernförderlichkeit ist daher ein Aspekt, der bereits bei der Konzeption des Systems bedacht werden muss. Jedes System wird für einen bestimmten Zweck entwickelt und ist für den Benutzer ein Mittel zur Erfüllung seiner Aufgaben. Das bedeutet, dass Systeme immer nah am Anwendungsgebiet konzipiert sind. Parallel zur durch die Benutzung eines Systems erworbenen Kenntnisse können deshalb zusätzlich auch Erfahrungen aus isomorphen Systemstrukturen zum Erlernen des Systems beitragen. \parencite[vgl.][177\psqq]{Herczeg2009}
+
+\subsubsection{Fehlertoleranz}
+
+Fehler sollten natürlich generell in jedem System vermieden werden, insbesondere schwere Ausnahmefehler, die komplette Systeme zum Absturz bringen können. Da aber keine fehlerfreie Software existiert, muss jedes System auf Fehler reagieren können. Der Benutzer sollte nach dem Auftreten eines Fehlers konstruktiv dabei unterstützt werden, den Fehler zu beheben oder das System wiederherzustellen. Zu diesem Zweck können von einfachen Fehlerseiten, die mindestens die Ursache des Problems benennen, bis hin zu vollautomatischen Fehlerreports verschiedene Maßnahmen getroffen werden. Eine Fehlernachricht sollte zudem immer als solche zu erkennen sein. Es eignen sich bekannte Signalfarben und Symbole um Fehlernachrichten hervorzuheben. \parencite[vgl.][182\psqq]{Herczeg2009} Dies ist besonders wichtig, wenn ein Fehler vom System nicht abgefangen oder korrigiert werden kann, und es auch im Interesse des Herstellers liegt Feedback über solche Ausnahmefehler zu erhalten. In diesem Zusammenhang ist es außerdem wichtig, den Benutzer nicht mit unnötigen Warnungen und Fehlermeldungen zu überhäufen. Die Gewichtigkeit eines Fehlers kann dabei ebenfalls über verschiedene Gestaltungsmittel ausgedrückt werden.\parencite[vgl.][185\psq]{Herczeg2009}
+
+Fehlertoleranz bezieht sich aber nicht ausschließlich auf Systemfehler, sondern auch auf Fehler bei Formulareingaben. Hier sollte, wenn möglich, bereits vor dem Abschicken der Daten eine Plausibilitätsprüfung stattfinden.
+
+
+%----------------------------------------------
+%\subsection{WYSIWYG im Detail}
+%
+%\begin{itemize}
+%\item Einordnung in die Gestaltungsgrundsätze
+%\item Anforderungen an WYSIWYG Systeme erarbeiten und erläutern
+%\item Kontext zu Web applikationen herstellen
+%\end{itemize}
+%----------------------------------------------
+
+\subsection{Evaluationsverfahren}
+
+Während der Entwicklung komplexer interaktiver Systeme ist es aufgrund der vielen Einfluss nehmenden Faktoren, wie zum Beispiel die Struktur und Eigenschaften der Anwendungsbereiche, Arbeitskontexte und Umgebungsbedingungen, nicht möglich software-ergonomische Qualitätsmerkmale vollumfänglich im Entwicklungsprozess zu berücksichtigen. Deshalb ist es nach der Realisierung einer Benutzerschnittstelle notwendig, diese auf ihre software-ergonomische Qualität zu prüfen. Dieser Art von Qualitätsprüfungen wird auch als Evaluation bezeichnet. \parencite[vgl.][207]{Herczeg2009}
+
+Für eine Evaluation müssen Kriterien herangezogen werden, nach denen ein System bewertet werden soll. Solche Kriterien könne zum Beispiel die in Abschnitt \ref{sec:software-ergonomie:Definition und Einordnung} beschrieben Gestaltungsgrundsätze nach EN ISO 9241-110 sein. Sind die zu untersuchenden Kriterien bestimmt, können eine Reihe von Evaluationsverfahren angewandt werden. Es gilt dabei zu beachten, dass für die Evaluation eine möglichst genaue Repräsentation der zukünftigen Benutzer herangezogen werden sollte. Es empfiehlt sich, ebenfalls schon während des Entwicklungsprozesses erste Evaluationen anhand von Prototypen durchzuführen. \parencite[vgl.][208]{Herczeg2009} Es werden generell drei Grundtypen der Evaluation unterschieden \parencite[894\psqq]{Karat1988}:
+
+\begin{itemize}
+\item Theorieorientierte Evaluation
+\item Augabenorientierte Evaluation
+\item Benutzerorientierte Evaluation
+\end{itemize}
+
+Kriterien für die Anwendung dieser Evaluationsverfahren finden sich auch in der ISO Norm 16982. Die nachfolgende Beschreibung der genannten Evaluationsverfahren stellen zusammenfassend die Kernmerkmale und anwendbaren Prüftechniken heraus.
+
+\subsubsection{Theorieorientierte Evaluation}
+
+Bei der theorieorientierten Evaluation findet die Evaluation ausschließlich auf Grundlage von Regeln und Prinzipien, die aus den ermittelten Kriterien abgeleitet werden, statt. \parencite[vgl.][208]{Herczeg2009} Die in Abschnitt \ref{sec:software-ergonomie:Definition und Einordnung} betrachteten Gestaltungsgrundsätze eignen sich für eine solche Art der Evaluation, da sie konkrete anwendbare Richtlinien zur Gestaltung von Benutzeroberflächen enthalten. Ebenso können anwendungsspezifische Styleguides, die innerhalb von Unternehmen definiert werden, Bestandteil einer solchen Evaluation sein.
+
+Theorieorientierte Evaluation eignet sich vor allem dann, wenn die zu evaluierende Anwendung standardisierte Aufgaben realisiert und zusätzlich eine einheitlich zusammengesetzte Benutzergruppe identifiziert werden kann. In diesem Fall fällt es aufgrund von bekannten Standards und der Orientierung an vergleichbaren System einfacher geeignete Gestaltungs- und Bewertungsregeln zu finden. Die Anwendung einer theorieorientierten Evaluation sollte aufgrund unseres begrenzten Wissens über die menschliche Kognition und Wahrnehmung aber nur ergänzend zu anderen Evaluationsverfahren angewendet werden. \parencite[vgl.][209]{Herczeg2009} Grobe Systemschwächen können dennoch durch eine sukzessive theorieorientierte Evaluation während des Entwicklungsprozesses verhindert werden.
+
+\subsubsection{Aufgabenorientierte Evaluation}
+
+Aufgabenorientierte Evaluation orientiert sich, wie der Name bereits impliziert, an den Aufgaben, die die Benutzer mit Hilfe des Systems bewältigen. Die Art der Evaluation kommt, wie auch die theorieorientierte Evaluation, ohne Benutzerbeobachtung aus. Als Grundlage der Evaluation dienen konkrete Aufgabenbeschreibungen. Für die Durchführung einer aufgabenorientierten Evaluation wurden verschiedene Modellierungsverfahren entwickelt, die eine qualitative und quantitative Analyse von Handlungsabläufen und möglichen Fehlhandlungen zulassen. \parencite[vgl.][209]{Herczeg2009}
+
+Ein weit verbreitetes Verfahren zur modellbasierten aufgabenorientierten Evaluation ist die GOMS-Modellierung (Goals, Operators, Methods, Selection Rules). Dabei werden Aufgaben in einzelne Bestandteile zerlegt. Eine Aufgabe beschreibt dabei immer ein übergeordnetes Ziel, das durch die Erfüllung mehrerer Unterziele erreicht werden kann. Die für die Erreichung der Ziele benötigten Eingaben hinsichtlich der für die Bedienung des Systems zu benutzenden Eingabegeräte (motorische Aktivitäten des Benutzers) werden als Aktivitäten zusammengefasst. Der Zusammenschluss von Kontrollstrukturen innerhalb des Systems, die der Erreichung eines bestimmten Zieles dienen, werden als höherwertige Operationen klassifiziert und im Kontext der GOMS-Modellierung als Methoden bezeichnet. Als Letztes wird Selektion als das Auswahlverhalten des Benutzers bei mehreren anwendbaren Methoden beschrieben. \parencite[vgl.][209]{Herczeg2009}
+
+Durch die Zerlegung einer Aufgabe in diese Bestandteile kann ein Verhaltens- und Problemlösungsmodell erstellt werden, das die Dynamik des Problemlösungsvorgangs beschreibt. Auf Grundlagen dieses Modells können anschließend Aussagen über Vollständigkeit und Effizienz des Systems getroffen werden. Für jedes Arbeitsziel sollte demnach eine Lösungsmethode vorhanden sein. Häufig auftretende Aufgaben sollten durch schnell durchführbare Methoden gekennzeichnet sein. Die Menge der identifizierten problemunabhängigen Methoden, sowie von Methoden die auch in ähnlichen Systemen verwendet werden, lassen zusätzlich Rückschlüsse über den zu erwartenden Lernaufwand zu. \parencite[vgl.][210]{Herczeg2009}
+
+Genau wie die theorieorientierte Evaluation lässt sich GOMS aber nur schwer auf Systeme anwenden, deren Handhabung und Nutzbarkeit schwierig abzuschätzen sind. Beide Evaluationsarten stützen sich in Teilen auf die Gegenüberstellung mit vergleichbaren Systemen. 
+
+\subsubsection{Benutzerorientierte Evaluation}
+
+Die benutzerorientierte Evaluation ist eines der wichtigsten Evaluationsverfahren, da die Benutzer in den Evaluationsprozess direkt mit einbezogen werden. Grundlage einer solchen Evaluation ist immer die Bestimmung von Benutzertypen. Dies geschieht mittels einer Benutzermodellierung, die angenommen Kenntnisse, Hintergründe und Fähigkeiten der Benutzer in Gruppen unterteilt. Anhand dieser Benutzergruppen können gezielt Befragungen durchgeführt werden. Gefragt wird dabei nach Erwartungen, Erlebnissen und Erfahrungen während der Benutzung des Systems. Entscheidend ist dabei aber die Qualität der gestellten Fragen und die Bereitschaft des Benutzers sich ehrlich mit diesen Fragen auseinanderzusetzen. Solche Befragungen können bereits während des Entwicklungsprozesses durchgeführt werden und erlauben es vergleichsweise leicht Probleme im System zu identifizieren. \parencite[vgl.][215]{Herczeg2009}
+
+Als Ergänzung zu Befragungen können die Aktionen der Benutzer auch software-technisch protokolliert werden. Das Benutzerverhalten wird dadurch unverfälscht und eindeutig gespeichert, was die Identifizierung von Schwachstellen und Fehlern im System zusätzlich erleichtert.
+
+Eine ähnliche Form ist die Aufzeichnung der Kommentare der Benutzer während der Benutzung des Systems. Die Benutzer werden dazu angehalten, ihre physischen und mentalen Aktivitäten zu kommentieren. Können diese Aufzeichnungen zusätzlich auch mit software-technischen Protokollen synchronisiert werden, ergibt sich ein sehr genaues Bild der software-ergonomischen Qualität eines Systems. \parencite[vgl.][216]{Herczeg2009} Solche Analysen können aber aufgrund der technischen Realisierung und langwierigen Auswertung sehr aufwändig sein.
+
+Um diesen Aufwand etwas einzuschränken, empfiehlt es sich kontrollierte Experimente durchzuführen. Dabei werden genau definierte Teile des Systems auf Grundlage von vorher aufgestellten Hypothesen untersucht. Die testenden Benutzergruppen können dabei hinsichtlich der benötigten Zeit für die Erfüllung einer gestellten Aufgabe und der Häufigkeit von auftretenden Fehlern gemessen werden. \parencite[vgl.][216]{Herczeg2009} Mit dieser Methode können sehr aussagekräftige und gleichzeitig auch objektive Ergebnisse erzielt werden.
+
+
+\subsection{Zusammenfassung}
+
+Software-Ergonomie, insbesondere ergonomische Benutzerschnittstellen, ist ein sehr komplexes und schwer zu erfassendes Wissenschaftsgebiet. Der Mensch steht hier als große Unbekannte im Mittelpunkt. Der Versuch diese Unbekannte greifbar zu machen, um Regeln und Normen zur Benutzung interaktiver Systeme definieren zu können, ist Gegenstand zahlreicher Untersuchungen und wissenschaftlicher Abhandlungen.  Die Schwierigkeit liegt dabei aber viel weniger in den gewonnenen Erkenntnissen aus der Mensch-Computer-Interaktion, sondern in der Individualität. Individualität lässt sich aber wissenschaftlich kaum erfassen, denn letztendlich kann man es nicht allen recht machen.
+
+Fortschritte bei der Erforschung von Mensch-Computer-Interaktionen werden dabei sowohl im interdisziplinären Tätigkeitsbereich als auch im softwaretechnologischen Bereich gemacht. Vor allem im interdisziplinären Bereich ergeben sich interessante Perspektiven im Bereich der Kognitionswissenschaften, Psychologie und Physiologie. Diese beeinflussen das fachübergreifende Verständnis der Informatik positiv, sodass Software nicht mehr nur rein betriebswirtschaftlichen Anforderungen genügt, sondern auch den Ansprüchen und Bedürfnissen der Benutzer gerecht wird. In der andauernden Evolution moderner Softwaresysteme ist dies ein wesentlicher und auch notwendiger Schritt.
+Vom softwaretechnologischen Standpunkt betrachtet bieten sich ebenfalls interessante Teilgebiete an. Interessant ist die Bewertung von Softwaresystemen nach ergonomischer Qualität. Mit Hilfe von entwickelten Metriken und Methoden zur Evaluation software-ergonomischer Qualität ist es zunehmend möglich, software-ergonomische Aspekte bereits beim Entwurf von Softwaresystemen abzuschätzen und zu berücksichtigen.
+Dies hat als Konsequenz eine Öffnung und ein Bewusstsein für andere Fachgebiete zur Folge und hilft dabei Software nicht mehr nur als rein technologischen Selbstzweck zu verstehen.

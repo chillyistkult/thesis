@@ -1,0 +1,95 @@
+%%% File encoding: UTF-8
+%%% äöüÄÖÜß  <-- keine deutschen Umlaute hier? UTF-faehigen Editor verwenden!
+
+\documentclass[bachelor,german]{hgbthesis}
+% Zulässige Class Options: 
+%   Typ der Arbeit: diplom, master (default), bachelor, praktikum 
+%   Hauptsprache: german (default), english
+%%%----------------------------------------------------------
+
+\RequirePackage[utf8]{inputenc}		% Bei der Verw. von lualatex oder xelatex entfernen!
+
+\graphicspath{{images/}}    % Abbildungsverzeichnis
+\logofile{logo}				% Name des Logo-PDFs in images/ (\logofile{}, wenn kein Logo gewünscht)
+\bibliography{literatur}  	% Name der Biblatex-Literaturdatei (.bib)
+
+%%%----------------------------------------------------------
+% Angaben für die Titelei (Titelseite, Erklärung etc.)
+%%%----------------------------------------------------------
+
+%%% Einträge für ALLE Arbeiten: -----------------------------
+\title{Konzeption und prototypische Umsetzung einer webbasierten WYSIWYG-Anwendung zur Datenpflege}
+\author{Benjamin\ Schuch}
+\studiengang{Angewandte Informatik}
+\studienort{Berlin}
+\abgabedatum{2016}{08}{22}	% {YYYY}{MM}{DD}
+
+%%% Zusätzlich für eine Bachelorarbeit: ---------------------
+\nummer{533347}   % Stud-ID, z.B. 1310238045-A  
+% (A = 1. Bachelorarbeit)
+\semester{Sommersemester 2016} 
+%\gegenstand{Einführung in die Tiefere Problematik 1} 
+\betreuer{} % oder \betreuerin{..}
+
+%%% Restriktive Lizenformel anstatt CC (nur für Typ master) -
+%\strictlicense
+
+%%%----------------------------------------------------------
+\begin{document}
+%%%----------------------------------------------------------
+
+%%%----------------------------------------------------------
+\frontmatter                    % Titelei (röm. Seitenzahlen)
+%%%----------------------------------------------------------
+
+\maketitle
+
+\include{front/kurzfassung}		
+%\include{front/abstract}
+
+\tableofcontents
+\addcontentsline{toc}{chapter}{Abbildungsverzeichnis}
+\listoffigures
+\addcontentsline{toc}{chapter}{Tabellenverzeichnis}
+\listoftables
+\addcontentsline{toc}{chapter}{Listingverzeichnis}
+\lstlistoflistings
+
+%\include{front/vorwort} % Optional. Ggf. weglassen
+\include{front/abkuerzung}
+
+%%%----------------------------------------------------------
+\mainmatter          % Hauptteil (ab hier arab. Seitenzahlen)
+%%%----------------------------------------------------------
+
+\include{chapters/einleitung}
+\include{chapters/grundlagen}
+\include{chapters/analyse}
+\include{chapters/entwurf}
+\include{chapters/implementierung}
+\include{chapters/test}
+\include{chapters/ergebnis}
+
+%%%----------------------------------------------------------
+\appendix                                            % Anhang 
+%%%----------------------------------------------------------
+
+%\include{back/anhang_a}	% Technische Ergänzungen
+%\include{back/anhang_b}	% Inhalt der CD-ROM/DVD
+%\include{back/anhang_c}	% Chronologische Liste der Änderungen
+%\include{back/anhang_d}	% Quelltext dieses Dokuments
+
+%%%----------------------------------------------------------
+\MakeBibliography                        % Quellenverzeichnis
+%%%----------------------------------------------------------
+
+%%% Erkärung------------------------------
+\include{chapters/erklaerung}
+%%%----------------------------------------------------------
+
+%%% Messbox zur Druckkontrolle ------------------------------
+%%%\include{back/messbox}
+
+%%%----------------------------------------------------------
+\end{document}
+%%%----------------------------------------------------------
