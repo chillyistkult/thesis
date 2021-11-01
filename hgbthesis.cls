@@ -185,7 +185,8 @@
     \textbf{Zweitbetreuer:} & Christian Vogler \\
   	\end{tabular} 
 	\vskip 16mm%
-	{\large Eingereicht am \today}
+	{\large Eingereicht am 05.09.2016}
+	%{\large Eingereicht am \today}%
 \end{center}%
   \vfil%
 \end{german}
