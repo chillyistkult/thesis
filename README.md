@@ -1,36 +1,9 @@
-﻿# Hagenberg LaTeX Thesis Template
-**LaTeX-Vorlage für Bachelor- und Masterarbeiten**
+# Bachelorarbeit
 
-Moderne LaTeX-Vorlage für Abschlussarbeiten an der Universität oder Fachhochschule (Bachelorarbeit, Master, Diplom). 
-Voreingestellt für Arbeiten in Deutsch oder Englisch, auch für LaTeX-Einsteiger einfach zu verwenden unter Windows, 
-MacOS und Linux.
+### Konzeption und prototypische Umsetzung einer webbasierten WYSIWYG-Anwendung zur Datenpflege
 
-Diese Vorlage dient gleichzeitig als Anleitung und Vorlage für die Erstellung einer Diplomarbeit, Masterarbeit oder Bachelorarbeit mit LaTeX. Sie wird als allgemeiner Standard für derartige Arbeiten an der FH Hagenberg empfohlen und wird mittlerweile auch an zahlreichen anderen Hochschulen im deutschsprachigen Raum verwendet. Die Vorlage ist leicht verständlich, sofort einsetzbar, einfach zu adaptieren und sollte in jeder LaTeX-Umgebung problemlos laufen. Folgende Vorlagen sind aktuell verfügbar:
-* **_thesis.tex**: Master- oder Bachelorarbeit,
-* **_praktikum.tex**: Praktikumsbericht (gekürzte Variante der Bachelorarbeit),
-* **_termreport.tex**: Semesterbericht,
-* **_article.tex**: generischer Zeitschriftenartikel.
+**Kurzfassung**
 
-Die Vorlage basiert auf einer eigenen LaTeX-Dokumentenklasse (hgbthesis.cls) und mehreren Style-Dateien (hgb.sty, ...), die unabhängig auch für andere Arten von Dokumenten verwendet werden können.
+In der vorliegenden Arbeit wird die Entwicklung einer Verwaltungsplattform für die Pflege komplexer Datenstrukturen beschrieben. Dabei handelt es sich konkret um Filterdaten einer bereits bestehenden Software für die Bestimmung und Konfiguration von Druck- und Durchflussmessgeräten, die von der Yokogawa Deutschland GmbH hergestellt werden. Die entstehende Verwaltungsplattform wird durch eine Webanwendung realisiert und die dafür benötigte Kommunikation mit einem Server mittels eines Webservice umgesetzt.
 
-
-### Checkout:
-
-Um die Vorlage auf dem eigenen Computer zu bearbeiten, gibt es 2 Möglichkeiten
-(Button "Clone or download"):
-
-1. **Download**: als ZIP-Datei downloaden und an passender Stelle expandieren.
-2. **Clone**: als GIT Repository klonen.
-
-
-
-### Online-Modus (experimentell):
-
-Die Vorlage kann auch im Online-Modus verwendet werden, mit dem Vorteil, dass keine LaTeX-Installation am eigenen Computer erforderlich ist:
-* Vorlage auf **Overleaf**: **https://www.overleaf.com/read/mrpbhfwzyvsq**
-
-Zur Verwendung sind folgende Schritte erforderlich:
-* Personal Account anlegen (gratis),
-* Vorlage übernehmen (s. oben),
-* Hauptdatei auswählen (z.B. **_thesis.tex**, **_praktikum.tex**, ...) und editieren,
-* Dateien über GIT synchronisieren (falls gewünscht).
+Ein Schwerpunkt der Arbeit ist die Analyse bestehender Datenstrukturen und die darauf aufbauende Konzeption einer REST-konformen Schnittstelle. Die zu gestaltende Benutzeroberfläche realisiert dabei Konzepte der datengetriebenen Generierung von Steuerelementen auf Grundlage der gegebenen Datenbasis. Aufgrund der geteilten Datenbasis zwischen der bestehenden Konfigurationssoftware und der zu entwickelten Webanwendung werden außerdem WYSIWYG-Gestaltungskonzepte angewendet, um eine effiziente und robuste Datenpflege zu realisieren.
