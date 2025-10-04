@@ -1,6 +1,6 @@
 # Bachelorarbeit: Konzeption und prototypische Umsetzung einer webbasierten WYSIWYG-Anwendung zur Datenpflege
 
-![Thesis Cover](thesis.png)
+[![Thesis Cover](thesis.png)](thesis.pdf)
 
 ## 📋 Informationen
 
