@@ -3,58 +3,42 @@
   <!-- Background -->
   <rect width="1280" height="640" fill="#f5f5f5"/>
 
-  <!-- HTW Green accent bars -->
-  <rect x="0" y="0" width="1280" height="8" fill="#80C341"/>
-  <rect x="0" y="632" width="1280" height="8" fill="#80C341"/>
+  <!-- HTW Green accent bars (respecting 40pt safe zone) -->
+  <rect x="0" y="40" width="1280" height="8" fill="#80C341"/>
+  <rect x="0" y="592" width="1280" height="8" fill="#80C341"/>
 
-  <!-- Main title at top -->
-  <g transform="translate(640, 80)">
-    <text x="0" y="0" font-family="Georgia, serif" font-size="82" font-weight="bold" fill="#2d2d2d" text-anchor="middle">
+  <!-- Main title -->
+  <g transform="translate(640, 180)">
+    <text x="0" y="0" font-family="Georgia, serif" font-size="88" font-weight="bold" fill="#2d2d2d" text-anchor="middle">
       Bachelorarbeit
     </text>
   </g>
 
   <!-- Subtitle -->
-  <g transform="translate(640, 160)">
-    <text x="0" y="0" font-family="Arial, sans-serif" font-size="30" fill="#4a4a4a" text-anchor="middle">
+  <g transform="translate(640, 280)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="32" fill="#4a4a4a" text-anchor="middle">
       Konzeption und prototypische Umsetzung
     </text>
-    <text x="0" y="38" font-family="Arial, sans-serif" font-size="30" fill="#4a4a4a" text-anchor="middle">
+    <text x="0" y="42" font-family="Arial, sans-serif" font-size="32" fill="#4a4a4a" text-anchor="middle">
       einer webbasierten WYSIWYG-Anwendung
     </text>
-    <text x="0" y="76" font-family="Arial, sans-serif" font-size="30" fill="#4a4a4a" text-anchor="middle">
+    <text x="0" y="84" font-family="Arial, sans-serif" font-size="32" fill="#4a4a4a" text-anchor="middle">
       zur Datenpflege
     </text>
   </g>
 
-  <!-- HTW Berlin logo (centered between title and author) -->
-  <g transform="translate(640, 350)">
-    <g transform="scale(3.5)">
-      <rect x="79.709" y="16.494" width="5.314" height="10.63" fill="#80C341"/>
-      <rect x="85.023" y="27.124" width="5.316" height="5.315" fill="#80C341"/>
-      <path d="M42.504,11.179L47.819,11.179L47.819,16.494L53.134,16.494L53.134,21.809L47.819,21.809L47.819,27.124L53.134,27.124L53.134,32.439L47.819,32.439C44.883,32.439 42.504,30.059 42.504,27.124C42.525,27.126 42.504,11.179 42.504,11.179Z" fill="#80C341"/>
-      <path d="M58.448,16.494L63.764,16.494L63.764,27.124L69.079,27.124L69.079,16.494L74.393,16.494L74.393,27.124L79.709,27.124L79.709,32.439L63.764,32.439C60.828,32.439 58.448,30.059 58.448,27.124L58.448,16.494Z" fill="#80C341"/>
-      <rect x="21.244" y="21.809" width="5.315" height="10.63" fill="#80C341"/>
-      <rect x="21.244" y="11.179" width="5.315" height="5.315" fill="#80C341"/>
-      <path d="M26.556,16.494L31.871,16.493C34.807,16.493 37.189,18.874 37.189,21.809L37.189,32.439L31.874,32.439L31.874,21.809L26.559,21.809L26.556,16.494Z" fill="#80C341"/>
-    </g>
-    <!-- HTW Text - University name -->
-    <text x="0" y="50" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#231F20" text-anchor="middle">Hochschule für Technik und Wirtschaft Berlin</text>
-    <text x="0" y="68" font-family="Arial, sans-serif" font-size="10" fill="#80C341" text-anchor="middle">University of Applied Sciences</text>
-  </g>
-
-  <!-- Bottom section - Author -->
-  <g transform="translate(640, 520)">
-    <text x="0" y="0" font-family="Arial, sans-serif" font-size="32" fill="#666666" text-anchor="middle">
+  <!-- Bottom section - Author and University -->
+  <g transform="translate(640, 480)">
+    <text x="0" y="0" font-family="Arial, sans-serif" font-size="28" fill="#666666" text-anchor="middle">
       Benjamin Schuch
     </text>
-    <text x="0" y="40" font-family="Arial, sans-serif" font-size="24" fill="#888888" text-anchor="middle">
-      2016
+    <text x="0" y="38" font-family="Arial, sans-serif" font-size="24" fill="#888888" text-anchor="middle">
+      HTW Berlin · 2016
     </text>
   </g>
 
-  <!-- Decorative element (bottom right) -->
-  <g transform="translate(1100, 480)">
+  <!-- Decorative element (bottom right, respecting safe zone) -->
+  <g transform="translate(1080, 460)">
     <circle cx="40" cy="40" r="60" fill="#80C341" opacity="0.08"/>
     <circle cx="40" cy="40" r="40" fill="#80C341" opacity="0.12"/>
     <circle cx="40" cy="40" r="20" fill="#80C341" opacity="0.16"/>
