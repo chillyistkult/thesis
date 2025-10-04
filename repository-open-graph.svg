@@ -28,8 +28,8 @@
   </g>
 
   <!-- HTW Berlin logo (centered between title and author) -->
-  <g transform="translate(396, 300)">
-    <g transform="scale(1.4)">
+  <g transform="translate(640, 350)">
+    <g transform="scale(3.5)">
       <rect x="79.709" y="16.494" width="5.314" height="10.63" fill="#80C341"/>
       <rect x="85.023" y="27.124" width="5.316" height="5.315" fill="#80C341"/>
       <path d="M42.504,11.179L47.819,11.179L47.819,16.494L53.134,16.494L53.134,21.809L47.819,21.809L47.819,27.124L53.134,27.124L53.134,32.439L47.819,32.439C44.883,32.439 42.504,30.059 42.504,27.124C42.525,27.126 42.504,11.179 42.504,11.179Z" fill="#80C341"/>
@@ -37,12 +37,10 @@
       <rect x="21.244" y="21.809" width="5.315" height="10.63" fill="#80C341"/>
       <rect x="21.244" y="11.179" width="5.315" height="5.315" fill="#80C341"/>
       <path d="M26.556,16.494L31.871,16.493C34.807,16.493 37.189,18.874 37.189,21.809L37.189,32.439L31.874,32.439L31.874,21.809L26.559,21.809L26.556,16.494Z" fill="#80C341"/>
-
-      <!-- HTW Text - University name -->
-      <text x="100.99" y="19.5" font-family="Arial, sans-serif" font-size="1.2" fill="#231F20">Hochschule für Technik</text>
-      <text x="100.99" y="20.7" font-family="Arial, sans-serif" font-size="1.2" fill="#231F20">und Wirtschaft Berlin</text>
-      <text x="100.99" y="22.7" font-family="Arial, sans-serif" font-size="1.2" fill="#80C341">University of Applied Sciences</text>
     </g>
+    <!-- HTW Text - University name -->
+    <text x="0" y="50" font-family="Arial, sans-serif" font-size="12" font-weight="bold" fill="#231F20" text-anchor="middle">Hochschule für Technik und Wirtschaft Berlin</text>
+    <text x="0" y="68" font-family="Arial, sans-serif" font-size="10" fill="#80C341" text-anchor="middle">University of Applied Sciences</text>
   </g>
 
   <!-- Bottom section - Author -->
