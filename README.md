@@ -1,28 +1,84 @@
-# Bachelorarbeit
+# Bachelorarbeit: WYSIWYG-Webanwendung zur Datenpflege
 
-### Universität
+> Konzeption und prototypische Umsetzung einer webbasierten WYSIWYG-Anwendung zur Datenpflege
 
-Hochschule für Technik und Wirtschaft Berlin
+## 📋 Informationen
 
-### Fachbereich
+**Hochschule:** Hochschule für Technik und Wirtschaft Berlin
+**Fachbereich:** Wirtschaftswissenschaften II
+**Studiengang:** Angewandte Informatik
+**Autor:** Benjamin Schuch
+**Jahr:** 2016
 
-Wirtschaftswissenschaften II
+## 📖 Über die Arbeit
 
-### Studiengang
+Die netbase GmbH entwickelte für Yokogawa Deutschland die FlowConfigurator-Software, mit der Vertriebsmitarbeiter anhand von Kundenspezifikationen passende Druck- und Durchflussmessgeräte aus dem Produktbestand auswählen und konfigurieren können. Die Software nutzt ein vielschichtiges, datenbankbasiertes Filtersystem, das Filtersteuerelemente zur Laufzeit generiert. Bei Produktänderungen oder -erweiterungen mussten die Filterdaten bisher direkt in der Datenbank angepasst werden, was zu erhöhtem Pflegeaufwand führte. Die Arbeit zielt auf die Entwicklung einer Verwaltungsoberfläche ab, die diesen Prozess effizienter und robuster gestaltet.
 
-Angewandte Informatik
+### Besonderheit
 
-### Autor
+Da die Filterdaten neben Merkmalen und Verknüpfungen auch Layout- und Typinformationen enthalten, erfordert die Lösung nicht nur Dateneingabemasken, sondern auch Konzepte zur visuellen Anpassung der Filtersteuerelemente. Daher basiert die Benutzeroberfläche auf WYSIWYG-Prinzipien und ähnelt bewusst dem FlowConfigurator, um eine intuitive Bearbeitung zu ermöglichen.
 
-Benjamin Schuch
+### Lösung
 
-### Titel
+Die entwickelte Webanwendung bietet:
 
-Konzeption und prototypische Umsetzung einer webbasierten WYSIWYG-Anwendung zur Datenpflege
+- **REST-konforme Schnittstelle** für strukturierten Datenzugriff
+- **Datengetriebene Generierung** von Filtersteuerelementen
+- **WYSIWYG-Konzepte** für intuitive Layoutanpassungen
+- **Drag-and-Drop-Funktionalität** zur visuellen Anordnung
+- **Gemeinsame Datenbasis** mit der FlowConfigurator-Software
 
-### Kurzfassung
+### Technologien
 
-In der vorliegenden Arbeit wird die Entwicklung einer Verwaltungsplattform für die Pflege komplexer Datenstrukturen beschrieben. Dabei handelt es sich konkret um Filterdaten einer bereits bestehenden Software für die Bestimmung und Konfiguration von Druck- und Durchflussmessgeräten, die von der Yokogawa Deutschland GmbH hergestellt werden. Die entstehende Verwaltungsplattform wird durch eine Webanwendung realisiert und die dafür benötigte Kommunikation mit einem Server mittels eines Webservice umgesetzt.
+**Backend:**
+- PHP (Laravel Framework)
+- ORM (Eloquent)
+- MSSQL Datenbank
+- RESTful Webservice
 
-Ein Schwerpunkt der Arbeit ist die Analyse bestehender Datenstrukturen und die darauf aufbauende Konzeption einer REST-konformen Schnittstelle. Die zu gestaltende Benutzeroberfläche realisiert dabei Konzepte der datengetriebenen Generierung von Steuerelementen auf Grundlage der gegebenen Datenbasis. Aufgrund der geteilten Datenbasis zwischen der bestehenden Konfigurationssoftware und der zu entwickelten Webanwendung werden außerdem WYSIWYG-Gestaltungskonzepte angewendet, um eine effiziente und robuste Datenpflege zu realisieren.
+**Frontend:**
+- AngularJS
+- Bootstrap
+- Single Page Application (SPA)
 
+## 🔨 Build-Anleitung
+
+### Voraussetzungen
+
+- LaTeX-Distribution (MacTeX, TeX Live oder MiKTeX)
+- Biber (für Bibliographie)
+
+### Kompilierung
+
+```bash
+pdflatex -interaction=nonstopmode thesis.tex
+biber thesis
+pdflatex -interaction=nonstopmode thesis.tex
+pdflatex -interaction=nonstopmode thesis.tex
+```
+
+**Hinweis:** Mehrere Durchläufe sind notwendig, um Referenzen, Bibliographie und Seitenzahlen korrekt aufzulösen.
+
+Das kompilierte PDF wird als `thesis.pdf` generiert (ca. 1.8 MB, 78 Seiten).
+
+## 📚 Kapitelübersicht
+
+1. **Einleitung** - Problemstellung, Zielsetzung und Aufbau der Arbeit
+2. **Thematische Grundlagen** - REST, ROA und Software-Ergonomie
+3. **Anforderungsanalyse** - Funktionale und nicht-funktionale Anforderungen
+4. **Entwurf** - Systemarchitektur und Schnittstellendesign
+5. **Implementierung** - Technische Umsetzung der Kernkomponenten
+6. **Test** - Validierung durch Integrationstests
+7. **Ergebnis** - Bewertung und Ausblick
+
+## 🎯 Kernergebnisse
+
+- Erfolgreiche Implementierung einer webbasierten Datenpflegeanwendung
+- Realisierung von WYSIWYG-Konzepten für Filtersteuerelemente
+- REST-konforme Schnittstelle mit vollständiger CRUD-Funktionalität
+- Datengetriebene Generierung von UI-Steuerelementen
+- Nahtlose Integration mit der bestehenden FlowConfigurator-Software
+
+## 📄 Lizenz
+
+Siehe [LICENSE.md](LICENSE.md)
