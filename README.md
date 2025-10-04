@@ -89,4 +89,4 @@ Siehe [LICENSE.md](LICENSE.md)
 
 [![Thesis Cover](thesis.png)](thesis.pdf)
 
-**[📥 Download thesis.pdf](thesis.pdf)**
+**[📥 Download als PDF](thesis.pdf)**
