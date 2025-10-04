@@ -2,11 +2,13 @@
 
 ## 📋 Informationen
 
-**Hochschule:** Hochschule für Technik und Wirtschaft Berlin
-**Fachbereich:** Wirtschaftswissenschaften II
-**Studiengang:** Angewandte Informatik
-**Autor:** Benjamin Schuch
-**Jahr:** 2016
+| | |
+|---|---|
+| **Hochschule** | Hochschule für Technik und Wirtschaft Berlin |
+| **Fachbereich** | Wirtschaftswissenschaften II |
+| **Studiengang** | Angewandte Informatik |
+| **Autor** | Benjamin Schuch |
+| **Jahr** | 2016 |
 
 ## 📖 Über die Arbeit
 
