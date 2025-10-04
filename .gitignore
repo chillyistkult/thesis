@@ -18,3 +18,6 @@
 
 # Local files
 *.local.*
+
+# macOS
+.DS_Store
