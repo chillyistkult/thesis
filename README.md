@@ -84,3 +84,9 @@ Das kompilierte PDF wird als `thesis.pdf` generiert (ca. 1.8 MB, 78 Seiten).
 ## 📄 Lizenz
 
 Siehe [LICENSE.md](LICENSE.md)
+
+## 📖 Vorschau
+
+[![Thesis Cover](thesis.png)](thesis.pdf)
+
+**[📥 Download thesis.pdf](thesis.pdf)**
