@@ -21,6 +21,8 @@ und Wirtschaft Berlin.
 
 For permissions or inquiries, please contact the author.
 
-**Author:** Benjamin Schuch
-**Institution:** Hochschule für Technik und Wirtschaft Berlin
-**Year:** 2016
+| | |
+|---|---|
+| **Author** | Benjamin Schuch |
+| **Institution** | Hochschule für Technik und Wirtschaft Berlin |
+| **Year** | 2016 |
