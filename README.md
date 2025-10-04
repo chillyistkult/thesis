@@ -1,4 +1,6 @@
-# Bachelorarbeit: Konzeption und prototypische Umsetzung einer webbasierten WYSIWYG-Anwendung zur Datenpflege
+# Bachelorarbeit
+
+> Konzeption und prototypische Umsetzung einer webbasierten WYSIWYG-Anwendung zur Datenpflege
 
 ## 📋 Informationen
 
